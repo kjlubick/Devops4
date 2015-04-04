@@ -3,8 +3,8 @@ var httpProxy = require('http-proxy');
 var exec = require('child_process').exec;
 var request = require("request");
 
-var GREEN = 'http://127.0.0.1:5060';
-var BLUE  = 'http://127.0.0.1:9090';
+var GREEN = 'http://0.0.0.0:5060';
+var BLUE  = 'http://0.0.0.0:9090';
 
 var TARGET = GREEN;
 
@@ -30,12 +30,6 @@ var infrastructure =
     exec('forever start deploy/green-www/main.js 5060');
     console.log("green slice");
 
-//setTimeout
-//var options = 
-//{
-//  url: "http://localhost:8080",
-//};
-//request(options, function (error, res, body) {
 
   },
 
