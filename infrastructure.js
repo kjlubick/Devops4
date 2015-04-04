@@ -6,7 +6,7 @@ var request = require("request");
 var GREEN = 'http://0.0.0.0:5060';
 var BLUE  = 'http://0.0.0.0:9090';
 
-var TARGET = GREEN;
+var TARGET = BLUE;
 
 var infrastructure =
 {
@@ -30,6 +30,22 @@ var infrastructure =
     exec('forever --watch start deploy/green-www/main.js 5060');
     console.log("green slice");
 
+    setInterval(function() {
+      var options = {
+        host: '0.0.0.0',
+        path: '/',
+        //since we are listening on a custom port, we need to specify it by hand
+        port: '9090',
+        //This is what changes the request to a POST request
+        method: 'GET'
+      };
+
+      http.get(options,function(){}).on("error", function(e) {
+        if (e.status > 500) {
+          TARGET = GREEN;
+        }
+      });
+    }, 30000);
 
   },
 
