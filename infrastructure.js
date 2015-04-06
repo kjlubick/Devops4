@@ -26,8 +26,18 @@ var infrastructure =
     {
         if (TARGET === BLUE) {
           TARGET = GREEN;
+          BLUECLIENT.lrange("imageList", 0,-1,function(err,list){
+          if (err) throw err;
+            GREENCLIENT.rpush("imageList", list);
+            BLUECLIENT.ltrim("imageList",0,-1);
+          });
         } else {
           TARGET = BLUE;
+          GREENCLIENT.lrange("imageList", 0,-1,function(err,list){
+          if (err) throw err;
+            BLUECLIENT.rpush("imageList", list);
+            GREENCLIENT.ltrim("imageList",0,-1);
+          });
         }
     }
 
