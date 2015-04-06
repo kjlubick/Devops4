@@ -18,6 +18,16 @@ var infrastructure =
 
     var server  = http.createServer(function(req, res)
     {
+
+      if(req.url == '/switch')
+    {
+        if (TARGET === BLUE) {
+          TARGET = GREEN;
+        } else {
+          TARGET = BLUE;
+        }
+    }
+
       proxy.web( req, res, {target: TARGET } );
     });
     server.listen(8080);
@@ -42,7 +52,7 @@ var infrastructure =
 
       http.get(options,function(){}).on("error", function(e) {
         if (e.status > 500) {
-          TARGET = GREEN;
+          TARGET = BLUE;    //fall back
         }
       });
     }, 30000);
