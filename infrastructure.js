@@ -2,9 +2,12 @@ var http      = require('http');
 var httpProxy = require('http-proxy');
 var exec = require('child_process').exec;
 var request = require("request");
+var redis = require('redis');
 
-var GREEN = 'http://0.0.0.0:5060';
+var GREEN = 'http://0.0.0.0:5060';    //redis servers are at http://0.0.0.0:50601 and http://0.0.0.0:90901
 var BLUE  = 'http://0.0.0.0:9090';
+var GREENCLIENT = redis.createClient(50601, '0.0.0.0', {});
+var BLUECLIENT = redis.createClient(90901, '0.0.0.0', {});
 
 var TARGET = BLUE;
 
